@@ -53,7 +53,7 @@ method teams(tba: TBA, page = -1, year = -1, simple = false,
 
         result = teams
 
-method team(tba: TBA, team: string, simple = false): JsonNode {.base.} =
+method team*(tba: TBA, team: string, simple = false): JsonNode {.base.} =
     var simpleStr = if simple: "/simple" else: ""
     return tba.get(&"team/{team}{simpleStr}")
 
