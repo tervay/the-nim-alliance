@@ -1,6 +1,6 @@
 ## the_nim_alliance
 
-Nim wrapper for TheBlueAlliance's v3 API.
+Nim wrapper for [TheBlueAlliance](https://www.thebluealliance.com/)'s v3 API.
 
 Inspiration from [tbapy](https://github.com/frc1418/tbapy).
 
