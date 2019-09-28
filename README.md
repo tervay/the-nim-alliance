@@ -10,8 +10,15 @@ Inspiration from [tbapy](https://github.com/frc1418/tbapy).
 nimble install the_nim_alliance
 ```
 
+`prog.nim`:
 ```nim
 import the_nim_alliance
 tba = TBA(authKey: "<my auth key>")
 echo tba.team("frc2791")
+```
+
+You will need to compile with the `-d:ssl` flag.
+
+```bash
+nim c -d:ssl -r prog.nim
 ```
