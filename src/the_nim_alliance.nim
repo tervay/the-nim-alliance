@@ -4,7 +4,7 @@ const
     baseUrl = "https://www.thebluealliance.com/api/v3/"
 
 type
-    TBA = object
+    TBA* = object
         authKey: string
 
 proc simpleStr(simple: bool): string =
