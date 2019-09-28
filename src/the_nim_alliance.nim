@@ -17,16 +17,16 @@ method get(tba: TBA, url: string): JsonNode {.base.} =
     })
     result = parseJson(client.getContent(baseUrl & url))
 
-method teamKey(tba: TBA, id: string): string {.base.} =
+method teamKey*(tba: TBA, id: string): string {.base.} =
     result = id
 
-method teamKey(tba: TBA, id: int): string {.base.} =
+method teamKey*(tba: TBA, id: int): string {.base.} =
     result = "frc" & $id
 
-method status(tba: TBA): JsonNode {.base.} =
+method status*(tba: TBA): JsonNode {.base.} =
     result = tba.get("status")
 
-method teams(tba: TBA, page = -1, year = -1, simple = false,
+method teams*(tba: TBA, page = -1, year = -1, simple = false,
         keys = false): JsonNode {.base.} =
     if page != -1:
         if year != -1:
@@ -57,7 +57,7 @@ method team*(tba: TBA, team: string, simple = false): JsonNode {.base.} =
     var simpleStr = if simple: "/simple" else: ""
     return tba.get(&"team/{team}{simpleStr}")
 
-method teamEvents(tba: TBA, team: string, year = -1, simple = false,
+method teamEvents*(tba: TBA, team: string, year = -1, simple = false,
         keys = false): JsonNode {.base.} =
     if year != -1:
         if keys:
@@ -70,7 +70,7 @@ method teamEvents(tba: TBA, team: string, year = -1, simple = false,
         else:
             result = tba.get(&"team/{team}/events{simpleStr(simple)}")
 
-method teamAwards(tba: TBA, team: string, year = -1, event = ""): JsonNode {.base.} =
+method teamAwards*(tba: TBA, team: string, year = -1, event = ""): JsonNode {.base.} =
     if event.len() != 0:
         result = tba.get(&"team/{team}/event/{event}/awards")
     else:
@@ -79,7 +79,7 @@ method teamAwards(tba: TBA, team: string, year = -1, event = ""): JsonNode {.bas
         else:
             result = tba.get(&"team/{team}/awards")
 
-method teamMatches(tba: TBA, team: string, event = "", year = -1,
+method teamMatches*(tba: TBA, team: string, event = "", year = -1,
         simple = false, keys = false): JsonNode {.base.} =
     if event.len() != 0:
         if keys:
@@ -92,71 +92,71 @@ method teamMatches(tba: TBA, team: string, event = "", year = -1,
         else:
             result = tba.get(&"team/{team}/matches/{year}{simpleStr(simple)}")
 
-method teamYears(tba: TBA, team: string): JsonNode {.base.} =
+method teamYears*(tba: TBA, team: string): JsonNode {.base.} =
     result = tba.get(&"team/{team}/years_participated")
 
-method teamMedia(tba: TBA, team: string, year = -1, tag = ""): JsonNode {.base.} =
+method teamMedia*(tba: TBA, team: string, year = -1, tag = ""): JsonNode {.base.} =
     var tagStr = if tag.len() != 0: &"/tag/{tag}" else: ""
     var yearStr = if year != -1: &"/{year}" else: ""
     result = tba.get(&"team/{team}/media{tagStr}{yearStr}")
 
-method teamRobots(tba: TBA, team: string): JsonNode {.base.} =
+method teamRobots*(tba: TBA, team: string): JsonNode {.base.} =
     result = tba.get(&"team/{team}/robots")
 
-method teamDistricts(tba: TBA, team: string): JsonNode {.base.} =
+method teamDistricts*(tba: TBA, team: string): JsonNode {.base.} =
     result = tba.get(&"team/{team}/districts")
 
-method teamProfiles(tba: TBA, team: string): JsonNode {.base.} =
+method teamProfiles*(tba: TBA, team: string): JsonNode {.base.} =
     result = tba.get(&"team/{team}/social_media")
 
-method teamStatus(tba: TBA, team: string, event: string): JsonNode {.base.} =
+method teamStatus*(tba: TBA, team: string, event: string): JsonNode {.base.} =
     result = tba.get(&"team/{team}/event/{event}/status")
 
-method events(tba: TBA, year: int, simple = false, keys = false): JsonNode {.base.} =
+method events*(tba: TBA, year: int, simple = false, keys = false): JsonNode {.base.} =
     if keys:
         result = tba.get(&"events/{year}/keys")
     else:
         result = tba.get(&"events/{year}{simpleStr(simple)}")
 
-method event(tba: TBA, event: string, simple = false): JsonNode {.base.} =
+method event*(tba: TBA, event: string, simple = false): JsonNode {.base.} =
     result = tba.get(&"event/{event}{simpleStr(simple)}")
 
-method eventAlliances(tba: TBA, event: string): JsonNode {.base.} =
+method eventAlliances*(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/alliances")
 
-method eventDistrictPoints(tba: TBA, event: string): JsonNode {.base.} =
+method eventDistrictPoints*(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/district_points")
 
-method eventInsights(tba: TBA, event: string): JsonNode {.base.} =
+method eventInsights*(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/insights")
 
-method eventOPRs(tba: TBA, event: string): JsonNode {.base.} =
+method eventOPRs*(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/oprs")
 
-method eventPredictions(tba: TBA, event: string): JsonNode {.base.} =
+method eventPredictions*(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/predictions")
 
-method eventRankings(tba: TBA, event: string): JsonNode {.base.} =
+method eventRankings*(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/rankings")
 
-method eventTeams(tba: TBA, event: string, simple = false,
+method eventTeams*(tba: TBA, event: string, simple = false,
         keys = false): JsonNode {.base.} =
     if keys:
         result = tba.get(&"event/{event}/teams/keys")
     else:
         result = tba.get(&"event/{event}/teams{simpleStr(simple)}")
 
-method eventAwards(tba: TBA, event: string): JsonNode {.base.} =
+method eventAwards*(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/awards")
 
-method eventMatches(tba: TBA, event: string, simple = false,
+method eventMatches*(tba: TBA, event: string, simple = false,
         keys = false): JsonNode {.base.} =
     if keys:
         result = tba.get(&"event/{event}/matches/keys")
     else:
         result = tba.get(&"event/{event}/matches{simpleStr(simple)}")
 
-method match(tba: TBA, key = "", event = "", matchType = "qm",
+method match*(tba: TBA, key = "", event = "", matchType = "qm",
         number = -1, round = -1, simple = false): JsonNode {.base.} =
     if key.len() != 0:
         result = tba.get(&"match/{key}{simpleStr(simple)}")
@@ -166,17 +166,17 @@ method match(tba: TBA, key = "", event = "", matchType = "qm",
             &"match/{event}_{matchType}{number}{roundStr}{simpleStr(simple)}"
         )
 
-method districts(tba: TBA, year: int): JsonNode {.base.} =
+method districts*(tba: TBA, year: int): JsonNode {.base.} =
     result = tba.get(&"districts/{year}")
 
-method districtEvents(tba: TBA, district: string, simple = false,
+method districtEvents*(tba: TBA, district: string, simple = false,
         keys = false): JsonNode {.base.} =
     if keys:
         result = tba.get(&"district/{district}/events/keys")
     else:
         result = tba.get(&"district/{district}/events{simpleStr(simple)}")
 
-method districtTeams(tba: TBA, district: string, simple = false,
+method districtTeams*(tba: TBA, district: string, simple = false,
         keys = false): JsonNode {.base.} =
     if keys:
         result = tba.get(&"district/{district}/teams/keys")
