@@ -1,7 +1,3 @@
-# This is just an example to get you started. A typical library package
-# exports the main API in this file. Note that you cannot rename this file
-# but you can remove it if you wish.
-
 import httpclient, strformat, json, sequtils
 
 const
@@ -131,9 +127,64 @@ method eventAlliances(tba: TBA, event: string): JsonNode {.base.} =
 method eventDistrictPoints(tba: TBA, event: string): JsonNode {.base.} =
     result = tba.get(&"event/{event}/district_points")
 
+method eventInsights(tba: TBA, event: string): JsonNode {.base.} =
+    result = tba.get(&"event/{event}/insights")
+
+method eventOPRs(tba: TBA, event: string): JsonNode {.base.} =
+    result = tba.get(&"event/{event}/oprs")
+
+method eventPredictions(tba: TBA, event: string): JsonNode {.base.} =
+    result = tba.get(&"event/{event}/predictions")
+
+method eventRankings(tba: TBA, event: string): JsonNode {.base.} =
+    result = tba.get(&"event/{event}/rankings")
+
+method eventTeams(tba: TBA, event: string, simple = false,
+        keys = false): JsonNode {.base.} =
+    if keys:
+        result = tba.get(&"event/{event}/teams/keys")
+    else:
+        result = tba.get(&"event/{event}/teams{simpleStr(simple)}")
+
+method eventAwards(tba: TBA, event: string): JsonNode {.base.} =
+    result = tba.get(&"event/{event}/awards")
+
+method eventMatches(tba: TBA, event: string, simple = false,
+        keys = false): JsonNode {.base.} =
+    if keys:
+        result = tba.get(&"event/{event}/matches/keys")
+    else:
+        result = tba.get(&"event/{event}/matches{simpleStr(simple)}")
+
+method match(tba: TBA, key = "", event = "", matchType = "qm",
+        number = -1, round = -1, simple = false): JsonNode {.base.} =
+    if key.len() != 0:
+        result = tba.get(&"match/{key}{simpleStr(simple)}")
+    else:
+        let roundStr = if matchType == "qm": "" else: &"m{round}"
+        result = tba.get(
+            &"match/{event}_{matchType}{number}{roundStr}{simpleStr(simple)}"
+        )
+
+method districts(tba: TBA, year: int): JsonNode {.base.} =
+    result = tba.get(&"districts/{year}")
+
+method districtEvents(tba: TBA, district: string, simple = false,
+        keys = false): JsonNode {.base.} =
+    if keys:
+        result = tba.get(&"district/{district}/events/keys")
+    else:
+        result = tba.get(&"district/{district}/events{simpleStr(simple)}")
+
+method districtTeams(tba: TBA, district: string, simple = false,
+        keys = false): JsonNode {.base.} =
+    if keys:
+        result = tba.get(&"district/{district}/teams/keys")
+    else:
+        result = tba.get(&"district/{district}/teams")
 
 when isMainModule:
     echo "Enter auth key:"
     var tba = TBA(authKey: readLine(stdin))
-    echo pretty(tba.eventDistrictPoints("2019nytr"))
+    echo pretty(tba.match(event = "2019nytr", matchType = "f", number = 1, round = 1))
 
