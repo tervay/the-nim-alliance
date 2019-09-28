@@ -5,7 +5,7 @@ const
 
 type
     TBA* = object
-        authKey: string
+        authKey*: string
 
 proc simpleStr(simple: bool): string =
     result = if simple: "/simple" else: ""
